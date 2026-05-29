@@ -29,9 +29,27 @@ The site uses trial font files in `assets/fonts/`:
 
 ## GitHub Pages
 
-1. Push this repo to `alpastoral/alpastoral.github.io` on branch `main`.
-2. Repo → **Settings** → **Pages** → Source: **Deploy from branch** → `main` / `/ (root)`.
-3. Wait a few minutes for https://alpastoral.github.io to go live.
+The site is committed locally at `~/Projects/jasonjudechan.github.io` on branch `main`. To publish:
+
+### 1. Create the repo (one time)
+
+On GitHub, create a **public** repository named exactly **`alpastoral.github.io`** under the **alpastoral** account. Do not initialize with a README (this folder already has one).
+
+### 2. Push
+
+```bash
+cd ~/Projects/jasonjudechan.github.io
+git remote set-url origin https://github.com/alpastoral/alpastoral.github.io.git
+git push -u origin main
+```
+
+If prompted, sign in with GitHub (HTTPS) or configure an SSH key for `git@github.com:alpastoral/alpastoral.github.io.git`.
+
+### 3. Enable Pages
+
+Repo → **Settings** → **Pages** → Source: **Deploy from branch** → `main` / `/ (root)`.
+
+Wait a few minutes for **https://alpastoral.github.io** to go live.
 
 ## Custom domain (Namecheap)
 

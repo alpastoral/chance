@@ -60,59 +60,85 @@ a:hover {
   --gutter: clamp(12px, 1.25vw, 24px);
   max-width: 1920px;
   margin: 0 auto;
-  padding: 0 var(--gutter) clamp(48px, 4vw, 96px);
+  padding: 0 var(--gutter) clamp(32px, 3vw, 64px);
   background: #b0ad95;
 }
 
 /* Hero + details */
 
 .hero {
+  padding-top: clamp(48px, 6.8vw, 130px);
+}
+
+.hero__stage {
   position: relative;
-  padding-top: clamp(0px, 6.8vw, 130px);
-  min-height: clamp(420px, 42.7vw, 820px);
+  container-type: inline-size;
+  width: 100%;
+  --title-size: min(926px, calc(100cqw * 945 / 1917));
+  --title-pull: clamp(40px, 5.5vw, 100px);
+  --details-top: calc(var(--title-size) * 0.78 + 8px);
+  min-height: calc(var(--details-top) + var(--title-size) * 48 / 950 - var(--title-pull));
 }
 
 .chance-title {
   font-family: "ABC Asfalt", sans-serif;
-  font-size: clamp(160px, 49.48vw, 950px);
+  font-size: var(--title-size);
   font-weight: 400;
   line-height: 0.85;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: #302855;
-  margin-top: calc(-1 * clamp(68px, 6.77vw, 130px));
-  margin-bottom: clamp(16px, 2vw, 32px);
-  word-break: break-word;
+  white-space: nowrap;
+  margin-top: calc(-1 * var(--title-pull));
 }
 
 .details {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.4fr) auto;
-  gap: clamp(12px, 2vw, 32px);
-  align-items: start;
-  max-width: calc(1920px - 2 * var(--gutter) - 206px);
+  position: absolute;
+  top: calc(var(--details-top) - var(--title-pull));
+  left: 0;
+  width: 100%;
+  height: calc(var(--title-size) * 48 / 950);
   font-family: "Sans Plomb", sans-serif;
   font-weight: 300;
-  font-size: clamp(14px, 1.25vw, 24px);
+  font-size: calc(var(--title-size) * 24 / 950);
   line-height: 1.15;
 }
 
 .details__col {
+  position: absolute;
+  top: 0;
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-.details__col--archive,
-.details__col--contact {
+/* Lock columns to C / A / N / E letter positions at all sizes */
+.details__col--archive {
+  left: 0;
   flex-direction: row;
   align-items: flex-start;
-  gap: clamp(4px, 0.5vw, 8px);
+  gap: 0.15em;
+}
+
+.details__col--motto {
+  left: 31.03%;
+}
+
+.details__col--contact {
+  left: 50.8%;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.15em;
+}
+
+.details__col--meta {
+  left: 86%;
+  white-space: nowrap;
 }
 
 .details__glyph {
   display: block;
   width: auto;
-  height: clamp(28px, 2.5vw, 48px);
+  height: 2em;
   flex-shrink: 0;
 }
 
@@ -125,17 +151,12 @@ a:hover {
   white-space: pre;
 }
 
-.details__col--meta {
-  text-align: left;
-  white-space: nowrap;
-}
-
 /* Rules */
 
 .rule {
   border: none;
-  border-top: 2.5px solid #000;
-  margin: clamp(12px, 1.25vw, 24px) 0;
+  border-top: 2.5px solid #302855;
+  margin: clamp(8px, 1.25vw, 24px) 0;
 }
 
 /* Earth */
@@ -156,17 +177,15 @@ a:hover {
 /* Blurb */
 
 .blurb {
-  position: relative;
-  padding: clamp(24px, 2.5vw, 48px) 0;
-  min-height: clamp(120px, 12vw, 200px);
+  padding: clamp(16px, 2vw, 32px) 0;
 }
 
 .blurb__text {
   font-family: "Sans Plomb", sans-serif;
   font-weight: 300;
-  font-size: clamp(28px, 3.75vw, 72px);
+  font-size: clamp(20px, 3.75vw, 72px);
   line-height: 1.15;
-  max-width: 68%;
+  white-space: nowrap;
 }
 
 .blurb__text strong {
@@ -174,71 +193,59 @@ a:hover {
 }
 
 .blurb__footnote {
-  position: absolute;
-  right: 0;
-  bottom: clamp(24px, 2.5vw, 48px);
+  margin-top: clamp(8px, 1.25vw, 24px);
+  max-width: 42em;
   font-family: "Sans Plomb", sans-serif;
   font-weight: 300;
-  font-size: clamp(10px, 0.625vw, 12px);
+  font-size: clamp(9px, 0.625vw, 12px);
   line-height: 1.3;
-  text-align: left;
-  max-width: 240px;
 }
 
 /* Archive + SOON */
 
-.archive-wrap {
+.archive-block {
   position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  container-type: inline-size;
+  background: #302855;
+  height: clamp(320px, 41.67vw, 800px);
+  margin-top: clamp(16px, 2vw, 48px);
 }
 
 .soon {
   position: absolute;
-  top: clamp(-80px, -4.5vw, -58px);
-  right: clamp(0px, 8.6vw, 166px);
+  top: clamp(12px, 1.25vw, 24px);
+  right: clamp(12px, 1.25vw, 24px);
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(120px, 13.75vw, 264px);
-  height: clamp(95px, 10.8vw, 208px);
+  background: #6b3b47;
+  border-radius: 6px;
+  padding: clamp(6px, 0.75vw, 12px) clamp(10px, 1.25vw, 20px);
   pointer-events: none;
 }
 
-.soon__o {
-  position: absolute;
-  width: clamp(95px, 10.8vw, 208px);
-  height: clamp(120px, 13.75vw, 264px);
-  transform: rotate(90deg);
-}
-
 .soon__label {
-  position: relative;
-  z-index: 1;
   font-family: "Sans Plomb", sans-serif;
   font-weight: 300;
-  font-size: clamp(40px, 5vw, 96px);
-  line-height: 0.8;
-  text-align: justify;
-  padding-left: clamp(20px, 2.5vw, 57px);
-}
-
-.archive-block {
-  position: relative;
-  overflow: hidden;
-  background: #302855;
-  height: clamp(320px, 41.67vw, 800px);
-  margin-top: clamp(32px, 3.75vw, 72px);
+  font-size: clamp(18px, 2.5vw, 48px);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
 }
 
 .archive-block__title {
   font-family: "ABC Asfalt", sans-serif;
-  font-size: clamp(160px, 49.48vw, 950px);
+  font-size: clamp(240px, 49.56cqw, 950px);
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.85;
+  letter-spacing: 0;
   color: #c39e51;
-  position: absolute;
-  left: clamp(24px, 4.1vw, 79px);
-  top: clamp(-40px, -3.9vw, -75px);
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -246,83 +253,41 @@ a:hover {
 
 .quote {
   position: relative;
-  padding: clamp(32px, 2.5vw, 48px) 0 clamp(48px, 4vw, 80px);
+  padding: clamp(16px, 2vw, 32px) 0 clamp(32px, 3vw, 64px);
   text-align: center;
   border: none;
 }
 
 .quote__text {
   font-family: "Cordier", cursive;
-  font-size: clamp(24px, 2.5vw, 48px);
-  line-height: 0.8;
-  max-width: 980px;
+  font-size: clamp(20px, 2.5vw, 48px);
+  line-height: 1.1;
+  max-width: min(980px, 100%);
   margin: 0 auto;
-  white-space: pre-wrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .quote__cite {
   display: block;
-  margin-top: clamp(16px, 1.5vw, 26px);
+  margin-top: clamp(12px, 1.25vw, 24px);
   font-family: "Sans Plomb", sans-serif;
   font-weight: 300;
   font-size: clamp(10px, 0.625vw, 12px);
   font-style: normal;
-  text-align: right;
-  max-width: 980px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-right: clamp(0px, 24vw, 460px);
+  text-align: center;
 }
 
 /* Narrow viewports */
 
-@media (max-width: 900px) {
-  .details {
-    grid-template-columns: 1fr 1fr;
-    max-width: none;
-  }
-
-  .details__col--meta {
-    grid-column: 2;
-    justify-self: end;
-  }
-
+@media (max-width: 1100px) {
   .blurb__text {
-    max-width: 100%;
-  }
-
-  .blurb__footnote {
-    position: static;
-    margin-top: 24px;
-    max-width: none;
-  }
-
-  .soon {
-    right: var(--gutter);
-    top: -48px;
-  }
-
-  .quote__cite {
-    padding-right: 0;
-    text-align: center;
+    white-space: normal;
   }
 }
 
 @media (max-width: 560px) {
-  .details {
-    grid-template-columns: 1fr;
-  }
-
-  .details__col--meta {
-    grid-column: 1;
-    justify-self: start;
-  }
-
-  .chance-title {
-    font-size: clamp(100px, 28vw, 160px);
-  }
-
   .archive-block__title {
-    font-size: clamp(100px, 28vw, 160px);
+    font-size: clamp(200px, 52cqw, 320px);
   }
 }

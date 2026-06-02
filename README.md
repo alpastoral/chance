@@ -15,18 +15,16 @@ python3 -m http.server 8080
 
 Then visit http://localhost:8080
 
-## Fonts (trial)
+## Fonts
 
-The site uses trial font files in `assets/fonts/`:
+The site uses licensed font files in `assets/fonts/`:
 
 | Role | File |
 |------|------|
-| Display (`CHANCE`, `archive`) | `ABCAsfalt-CondensedRegular-Trial.otf` |
-| Body / nav | `SansPlomb_TRIAL-CondensedLight.otf` |
-| Bold emphasis | `SansPlomb_TRIAL-CondensedBold.otf` |
-| Quote | `CordierScript-Linked-Trial.otf` |
-
-**Before making the repo public:** confirm each foundry’s trial EULA allows web embedding and redistribution. When you purchase licenses, replace the files in `assets/fonts/` and update `@font-face` rules in `styles.css` if filenames change.
+| Display (`CHANCE`, `archive`) | `ABCAsfalt-CondensedRegular.otf` |
+| Body / nav | `SansPlomb-CondensedLight.otf` |
+| Bold emphasis | `SansPlomb-CondensedBold.otf` |
+| Quote | `CordierScript-Linked.otf` |
 
 ## GitHub Pages
 

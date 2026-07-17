@@ -386,22 +386,35 @@ a:hover {
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 700px) {
   html {
     --compact-scale: 0.42;
   }
 
+  .hero,
+  .masthead {
+    --title-pull: clamp(16px, 4.5vw, 28px);
+  }
+
+  .hero {
+    container-type: inline-size;
+    --title-size: min(926px, calc(100cqw * 945 / 1917));
+    /* Reserve wordmark height so details sit just underneath */
+    padding-top: calc(var(--title-size) * 1.02);
+  }
+
   .hero__stage {
-    min-height: 280px;
+    min-height: 0;
   }
 
   .details {
-    top: clamp(160px, 46vw, 210px);
+    position: relative;
+    top: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px 12px;
+    gap: 8px 12px;
     height: auto;
-    font-size: 14px;
+    font-size: clamp(12px, 3.4vw, 14px);
   }
 
   .details__col {
@@ -419,8 +432,8 @@ a:hover {
   }
 
   .hero-image img {
-    height: 100svh;
-    min-height: 560px;
+    height: 70svh;
+    min-height: 420px;
   }
 
   .archive-block__title {

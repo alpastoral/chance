@@ -40,10 +40,16 @@
 
 html {
   -webkit-font-smoothing: antialiased;
+  --scroll-progress: 0;
+  --compact-scale: 0.265;
+  --color-forest: #294033;
+  --color-sage: #98a58f;
+  --color-brown: #57483d;
+  --color-signal: #f42e32;
 }
 
 body {
-  background: #b0ad95;
+  background: var(--color-forest);
   color: #000;
 }
 
@@ -61,13 +67,14 @@ a:hover {
   max-width: 1920px;
   margin: 0 auto;
   padding: 0 var(--gutter) clamp(32px, 3vw, 64px);
-  background: #b0ad95;
+  background: var(--color-forest);
 }
 
 /* Hero + details */
 
 .hero {
-  padding-top: clamp(48px, 6.8vw, 130px);
+  --title-pull: clamp(48px, 6.8vw, 130px);
+  padding-top: var(--title-pull);
 }
 
 .hero__stage {
@@ -75,25 +82,76 @@ a:hover {
   container-type: inline-size;
   width: 100%;
   --title-size: min(926px, calc(100cqw * 945 / 1917));
-  --title-pull: clamp(40px, 5.5vw, 100px);
-  --details-top: calc(var(--title-size) * 0.78 + 8px);
-  min-height: calc(var(--details-top) + var(--title-size) * 48 / 950 - var(--title-pull));
+  --details-top-full: calc(var(--title-size) * 691 / 950);
+  --details-top-compact: calc(var(--title-size) * var(--compact-scale) * 252 / 251.547);
+  --details-top: calc(
+    var(--details-top-full) * (1 - var(--scroll-progress)) +
+    var(--details-top-compact) * var(--scroll-progress)
+  );
+  min-height: calc(
+    var(--details-top) +
+    var(--title-size) * 48 / 950 +
+    clamp(8px, 1.25vw, 24px) * (1 - var(--scroll-progress)) +
+    var(--title-size) * 96 / 950 * var(--scroll-progress)
+  );
+}
+
+.masthead {
+  --title-size: min(926px, calc((100vw - 2 * clamp(12px, 1.25vw, 24px)) * 945 / 1917));
+  --title-pull: clamp(48px, 6.8vw, 130px);
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  width: min(100%, 1920px);
+  height: calc(
+    var(--title-pull) +
+    var(--title-size) * 0.85 * (
+      1 - var(--scroll-progress) * (1 - var(--compact-scale))
+    ) +
+    12px
+  );
+  padding: var(--title-pull) clamp(12px, 1.25vw, 24px) 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.masthead::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    to bottom,
+    var(--color-forest) 0%,
+    var(--color-forest) 72%,
+    transparent 100%
+  );
+  opacity: var(--scroll-progress);
 }
 
 .chance-title {
+  position: relative;
   font-family: "ABC Asfalt", sans-serif;
   font-size: var(--title-size);
   font-weight: 400;
   line-height: 0.85;
   letter-spacing: 0;
-  color: #302855;
+  color: var(--color-sage);
+  text-align: center;
   white-space: nowrap;
-  margin-top: calc(-1 * var(--title-pull));
+  margin-top: calc(-1 * var(--title-pull) * (1 - var(--scroll-progress)));
+  transform: scale(
+    calc(1 - var(--scroll-progress) * (1 - var(--compact-scale)))
+  );
+  transform-origin: top center;
+  will-change: transform;
 }
 
 .details {
   position: absolute;
-  top: calc(var(--details-top) - var(--title-pull));
+  top: var(--details-top);
   left: 0;
   width: 100%;
   height: calc(var(--title-size) * 48 / 950);
@@ -155,23 +213,29 @@ a:hover {
 
 .rule {
   border: none;
-  border-top: 2.5px solid #302855;
+  border-top: 2.5px solid var(--color-sage);
   margin: clamp(8px, 1.25vw, 24px) 0;
 }
 
-/* Earth */
+/* Full-bleed hero image */
 
-.earth {
+.hero-image {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   margin: 0;
+  margin-left: calc(50% - 50vw);
   line-height: 0;
+  overflow: hidden;
+  animation: hero-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.earth img {
+.hero-image img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 1866 / 1493;
+  height: min(77.76vw, 1493px);
+  min-height: 420px;
   object-fit: cover;
+  object-position: center;
 }
 
 /* Blurb */
@@ -209,7 +273,7 @@ a:hover {
   display: grid;
   place-items: center;
   container-type: inline-size;
-  background: #302855;
+  background: var(--color-sage);
   height: clamp(320px, 41.67vw, 800px);
   margin-top: clamp(16px, 2vw, 48px);
 }
@@ -221,7 +285,7 @@ a:hover {
   z-index: 2;
   width: clamp(64px, 7vw, 136px);
   height: clamp(64px, 7vw, 136px);
-  background: #6b3b47;
+  background: var(--color-signal);
   border-radius: 50%;
   pointer-events: none;
   transform-origin: center;
@@ -249,20 +313,13 @@ a:hover {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .soon {
-    -webkit-animation: none;
-    animation: none;
-  }
-}
-
 .archive-block__title {
   font-family: "ABC Asfalt", sans-serif;
   font-size: clamp(240px, 49.56cqw, 950px);
   font-weight: 400;
   line-height: 0.85;
   letter-spacing: 0;
-  color: #c39e51;
+  color: var(--color-brown);
   text-align: center;
   white-space: nowrap;
 }
@@ -296,6 +353,31 @@ a:hover {
   text-align: center;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(4% 0 0);
+    transform: scale(1.015);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: scale(1);
+  }
+}
+
 /* Narrow viewports */
 
 @media (max-width: 1100px) {
@@ -305,7 +387,58 @@ a:hover {
 }
 
 @media (max-width: 560px) {
+  html {
+    --compact-scale: 0.42;
+  }
+
+  .hero__stage {
+    min-height: 280px;
+  }
+
+  .details {
+    top: clamp(160px, 46vw, 210px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 12px;
+    height: auto;
+    font-size: 14px;
+  }
+
+  .details__col {
+    position: static;
+  }
+
+  .details__col--contact,
+  .details__col--archive {
+    justify-self: start;
+  }
+
+  .details__col--motto,
+  .details__col--meta {
+    justify-self: end;
+  }
+
+  .hero-image img {
+    height: 100svh;
+    min-height: 560px;
+  }
+
   .archive-block__title {
     font-size: clamp(200px, 52cqw, 320px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image {
+    animation: none;
+  }
+
+  .soon {
+    -webkit-animation: none;
+    animation: none;
+  }
+
+  .chance-title {
+    will-change: auto;
   }
 }

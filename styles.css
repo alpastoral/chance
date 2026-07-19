@@ -84,9 +84,12 @@ a:hover {
   container-type: inline-size;
   width: 100%;
   --title-size: min(926px, calc(100cqw * 945 / 1917));
-  /* Tuck details just under letter ink (nearly touching) */
-  --details-top-full: calc(var(--title-size) * 0.50);
-  --details-top-compact: calc(var(--title-size) * var(--compact-scale) * 0.68);
+  /*
+    Figma Top frame: CHANCE height 808, details at y=821 → 13px under the letter box.
+    Title paints at viewport y=0; stage starts after --title-pull.
+  */
+  --details-top-full: calc(var(--title-size) * 0.85 + 13px - var(--title-pull));
+  --details-top-compact: calc(var(--title-size) * var(--compact-scale) * 0.9 + 13px);
   --details-top: calc(
     var(--details-top-full) * (1 - var(--scroll-progress)) +
     var(--details-top-compact) * var(--scroll-progress)
@@ -406,10 +409,9 @@ a:hover {
   }
 
   .hero {
-    container-type: inline-size;
-    --title-size: min(926px, calc(100cqw * 945 / 1917));
-    /* Nearly touching the wordmark ink */
-    padding-top: calc(var(--title-size) * 0.68);
+    --title-size: min(926px, calc((100vw - 2 * clamp(12px, 1.25vw, 24px)) * 945 / 1917));
+    /* Figma: 13px under the 0.85em letter box */
+    padding-top: calc(var(--title-size) * 0.85 + 13px);
     padding-bottom: 0;
   }
 
@@ -420,7 +422,7 @@ a:hover {
   .masthead {
     height: calc(
       var(--title-pull) +
-      var(--title-size) * 0.68 * (
+      var(--title-size) * 0.85 * (
         1 - var(--scroll-progress) * (1 - var(--compact-scale))
       ) +
       8px
@@ -428,7 +430,7 @@ a:hover {
   }
 
   .chance-title {
-    line-height: 0.8;
+    line-height: 0.85;
   }
 
   .details {
@@ -438,7 +440,7 @@ a:hover {
     grid-template-columns: 1fr 1fr;
     gap: 8px 12px;
     height: auto;
-    margin-top: -0.2em;
+    margin-top: 0;
     font-size: clamp(12px, 3.4vw, 14px);
   }
 

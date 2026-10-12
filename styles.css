@@ -199,7 +199,7 @@ a:hover {
   line-height: 1.3;
 }
 
-/* Archive + spinning COMING SOON */
+/* Archive banner (links to the shop) + spinning SHOP badge */
 
 .archive-block {
   position: relative;
@@ -210,6 +210,15 @@ a:hover {
   background: var(--color-sage);
   height: clamp(320px, 41.67vw, 800px);
   margin: 0;
+}
+
+.archive-block:hover {
+  text-decoration: none;
+}
+
+.archive-block:focus-visible {
+  outline: 3px solid var(--color-signal);
+  outline-offset: -3px;
 }
 
 .soon {
@@ -237,7 +246,7 @@ a:hover {
 .soon__text {
   font-family: "Sans Plomb", sans-serif;
   font-weight: 300;
-  font-size: 9.5px;
+  font-size: 25px; /* viewBox is 100 units, so 25 = 25% of the circle */
   letter-spacing: 0.04em;
   fill: #000;
 }
